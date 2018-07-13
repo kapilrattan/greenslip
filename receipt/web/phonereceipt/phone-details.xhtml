@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <div id="header">
+                <ui:insert name="phonereceiptHeader">
+                    <ui:include src="phonereceipt-header.xhtml" />
+                </ui:insert>
+            </div>
+            
+            <div>
+                <p:panel header="Phone Details">
+                    <p:messages>
+                        <p:autoUpdate />
+                    </p:messages>
+                    <div align="center">
+                        <h:panelGrid id="phoneDetailsGrid" columns="4" cellpadding="5" cellspacing="10" border="0">
+                            <p:outputLabel for="storeName" value="Store :" />
+                            <p:selectOneButton id="storeName" value="#{phoneReceiptBean.storeName}">
+                                <f:selectItem itemLabel="Central" itemValue="Central" />
+                                <f:selectItem itemLabel="Newtown" itemValue="Newtown" />
+                            </p:selectOneButton>
+
+                            <p:outputLabel for="tradeDate" value="Date :" />
+                            <p:calendar id="tradeDate" pattern="dd-MMM-yyyy" showOn="button"  value="#{phoneReceiptBean.tradeDate}" />
+
+                            <h:outputLabel for="phoneMake" value="Phone Make :" />
+                            <p:inputText id="phoneMake" value="#{phoneReceiptBean.phoneMake}" required="true">
+                                <p:watermark for="phoneMake" value="Phone Make" />
+                            </p:inputText>
+                            <h:outputLabel for="phoneModel" value="Phone Model :" />
+                            <p:inputText id="phoneModel" value="#{phoneReceiptBean.phoneModel}" required="true" label="Phone Model">
+                                <p:watermark for="phoneModel" value="Phone Model" />
+                            </p:inputText>
+
+                            <h:outputText value="Phone Condition :" />
+                            <p:selectOneButton value="#{phoneReceiptBean.phoneCondition}">
+                                <f:selectItem itemLabel="Used" itemValue="Used" />
+                                <f:selectItem itemLabel="New" itemValue="New" />
+                            </p:selectOneButton>
+
+                            <h:outputLabel for="sellerName" value="Seller Name :" />
+                            <p:inputText id="sellerName" value="#{phoneReceiptBean.sellerName}" required="true" label="Seller Name">
+                                <p:watermark for="sellerName" value="Seller Name" />
+                            </p:inputText>
+                            <h:outputLabel for="sellerContactNumber" value="Contact Number :" />
+                            <p:inputText id="sellerContactNumber" value="#{phoneReceiptBean.sellerContactNumber}" required="true" label="Contact Number">
+                                <p:watermark for="sellerContactNumber" value="Contact Number" />
+                            </p:inputText>
+                            <h:outputLabel for="sellerEmailId" value="Email Id :" />
+                            <p:inputText id="sellerEmailId" value="#{phoneReceiptBean.sellerEmailId}" required="true" label="Email Id">
+                                <p:watermark for="sellerEmailId" value="Email Id" />
+                            </p:inputText>
+                            <h:outputLabel for="sellerPhotoIdType" value="Photo Id Type :" />
+                            <p:inputText id="sellerPhotoIdType" value="#{phoneReceiptBean.sellerPhotoIdType}" required="true" label="Photo Id Type">
+                                <p:watermark for="sellerPhotoIdType" value="Photo Id Type" />
+                            </p:inputText>
+                        </h:panelGrid>
+                    </div>
+                </p:panel>
+            </div>
+            <div align="right">
+                <p:commandButton value="Next" ajax="false" icon="ui-icon-next" validateClient="true" style="margin-right:10px" action="photo-id">
+                    <f:param id="stepIndex" name="stepIndex" value="1"/>
+                    <f:param id="i" name="i" value="1"/>
+                </p:commandButton>
+            </div>
+
+        </h:form>
+    </h:body>
+</html>
+
