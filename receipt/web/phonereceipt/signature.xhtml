@@ -19,31 +19,38 @@
             <p:growl>
                 <p:autoUpdate />
             </p:growl>
-
-            <p:signature style="width:400px;height:200px" widgetVar="sig" value="#{phoneReceiptBean.sellerSignature}" required="true" guideline="true"/>
-
-            <div style="margin:20px 0">
-                <p:commandButton value="Submit" icon="ui-icon-check" update="output"/>
-                <p:commandButton value="Clear" icon="ui-icon-close" type="button" onclick="PF('sig').clear()"/>
-            </div>
-
-            <p:outputPanel id="output">
-                <h:outputText rendered="#{not empty phoneReceiptBean.sellerSignature}" style="font-size:24px;display:block" value="Your Signature" />
-                <p:signature style="width:400px;height:200px;" value="#{phoneReceiptBean.sellerSignature}" readonly="true"
-                             rendered="#{not empty phoneReceiptBean.sellerSignature}" backgroundColor="#eaeaea" color="#03a9f4"/>
-            </p:outputPanel>
-            <div align="left">
-                <p:commandButton value="Back" ajax="false" icon="ui-icon-back" validateClient="true" style="margin-right:10px" action="photo-id">
-                    <f:param name="stepIndex" value="1"/>    
-                    <f:param name="i" value="1"/>
-                </p:commandButton>
-            </div>
-            <div align="right">
-                <p:commandButton value="Next" ajax="false" icon="ui-icon-next" validateClient="true" style="margin-right:10px" action="confirmation">
-                    <f:param name="stepIndex" value="3"/>
-                    <f:param name="i" value="1"/>
-                </p:commandButton>
-            </div>            
+            <p:panel header="Signature">
+                <p:messages>
+                    <p:autoUpdate />
+                </p:messages>
+                <h:panelGrid columns="2" >
+                    <p:signature style="width:475px;height:300px" widgetVar="sig" value="#{phoneReceiptBean.sellerSignature}" required="true" guideline="true"/>
+                    <p:outputPanel id="output">
+                        <p:signature style="width:475px;height:300px;" value="#{phoneReceiptBean.sellerSignature}" readonly="true"
+                                     rendered="#{not empty phoneReceiptBean.sellerSignature}" backgroundColor="#eaeaea" color="#03a9f4"/>
+                    </p:outputPanel>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <p:commandButton value="Submit" icon="ui-icon-check" update="output"/>
+                        <p:commandButton value="Clear" icon="ui-icon-close" type="button" onclick="PF('sig').clear()"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </p:panel>
+            <table width="100%">
+                <tr>
+                    <td align="left">
+                        <p:commandButton value="Back" ajax="false" icon="ui-icon-back" validateClient="true" action="photo-id" >
+                            <f:param name="stepIndex" value="1"/>    
+                            <f:param name="i" value="1"/>
+                        </p:commandButton>
+                    </td>
+                    <td align="right">
+                        <p:commandButton value="Next" ajax="false" icon="ui-icon-next" validateClient="true" action="confirmation">
+                            <f:param name="stepIndex" value="3"/>
+                            <f:param name="i" value="1"/>
+                        </p:commandButton>
+                    </td>
+                </tr>
+            </table>
         </h:form>        
     </h:body>
 </html>

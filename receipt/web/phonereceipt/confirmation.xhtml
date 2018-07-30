@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -12,7 +14,64 @@
                 <ui:include src="phonereceipt-header.xhtml" />
             </ui:insert>
         </div>
-        <h3>Confirmation</h3>
+        <p:panel header="Confirmation">
+            <p:messages>
+                <p:autoUpdate />
+            </p:messages>
+            <h:panelGrid id="phoneDetailsGrid" columns="4" cellpadding="5" cellspacing="10" border="3">
+                <p:outputLabel  value="Store :" />
+                <p:outputLabel  value="#{phoneReceiptBean.storeName}" />
+
+                <p:outputLabel value="Date :" />
+                <p:outputLabel value="#{phoneReceiptBean.tradeDate}"  />
+
+                <h:outputLabel value="Phone Make :" />
+                <h:outputLabel value="#{phoneReceiptBean.phoneMake}" /> 
+
+                <h:outputLabel value="Phone Model :" />
+                <h:outputLabel value="#{phoneReceiptBean.phoneModel}" />
+
+                <h:outputText value="Phone Condition :" />
+                <h:outputText value="#{phoneReceiptBean.phoneCondition}" />
+
+                <h:outputLabel value="Seller Name :" />
+                <h:outputLabel value="#{phoneReceiptBean.sellerName}" />
+
+                <h:outputLabel value="Contact Number :" />
+                <h:outputLabel value="#{phoneReceiptBean.sellerContactNumber}" />
+
+                <h:outputLabel value="Email Id :" />
+                <h:outputLabel value="#{phoneReceiptBean.sellerEmailId}" />
+
+                <h:outputLabel for="sellerPhotoIdType" value="Photo Id Type :" />
+                <h:outputLabel for="sellerPhotoIdType" value="#{phoneReceiptBean.sellerPhotoIdType}" />
+
+                <img src="http://localhost:8080/receipt/images/photoid/#{phoneReceiptBean.photoIdImageName}.jpeg" alt="Photo Id"/>
+                <p:outputPanel id="output">
+                    <p:signature style="width:475px;height:300px;" value="#{phoneReceiptBean.sellerSignature}" readonly="true"
+                                 rendered="#{not empty phoneReceiptBean.sellerSignature}" backgroundColor="#eaeaea" color="#03a9f4"/>
+                </p:outputPanel>
+
+
+            </h:panelGrid>
+        </p:panel>
+                    <table width="100%">
+                <tr>
+                    <td align="left">
+                        <p:commandButton value="Back" ajax="false" icon="ui-icon-back" validateClient="true" action="signature" >
+                            <f:param name="stepIndex" value="1"/>    
+                            <f:param name="i" value="1"/>
+                        </p:commandButton>
+                    </td>
+                    <td align="right">
+                        <p:commandButton value="Next" ajax="false" icon="ui-icon-next" validateClient="true" action="#{phoneReceiptBean}">
+                            <f:param name="stepIndex" value="3"/>
+                            <f:param name="i" value="1"/>
+                        </p:commandButton>
+                    </td>
+                </tr>
+            </table>
+
     </h:body>
 </html>
 

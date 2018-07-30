@@ -5,13 +5,15 @@
  */
 package com.rsys.greenslip.phonereceipt.bo;
 
+import com.rsys.greenslip.phonereceipt.util.Constants;
 import java.util.Date;
-import javax.faces.bean.RequestScoped;
+//import javax.faces.bean.RequestScoped;
 import javax.validation.constraints.Past;
 import java.io.File;
 import java.io.IOException;
 import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.imageio.stream.FileImageOutputStream;
@@ -22,7 +24,7 @@ import org.primefaces.event.CaptureEvent;
  * @author krattan
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class PhoneReceiptBean {
 
     private String storeName;
@@ -40,7 +42,25 @@ public class PhoneReceiptBean {
     private String sellerSignature;
     @Past
     private Date tradeDate;
+    private boolean imageCaptured; 
+    private String imageExternalPath;
 
+    public String getImageExternalPath() {
+        return imageExternalPath;
+    }
+
+    public void setImageExternalPath(String imageExternalPath) {
+        this.imageExternalPath = imageExternalPath;
+    }
+
+    public boolean isImageCaptured() {
+        return imageCaptured;
+    }
+
+    public void setImageCaptured(boolean imageCaptured) {
+        this.imageCaptured = imageCaptured;
+    }
+    
     public String getStoreName() {
         return storeName;
     }
@@ -170,7 +190,7 @@ public class PhoneReceiptBean {
 
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 //        photoIdLocation = "D:"+ File.separator + "greenslip"  + File.separator + "images" + File.separator + "photoid" + File.separator + photoIdImageName + ".jpeg";
-        photoIdLocation = externalContext.getRealPath("") + File.separator + photoIdImageName + ".jpeg"; 
+        photoIdLocation = externalContext.getRealPath("") + File.separator + "images" + File.separator + "photoid" + File.separator + photoIdImageName + ".jpeg"; 
         FileImageOutputStream imageOutput;
         try {
             imageOutput = new FileImageOutputStream(new File(photoIdLocation));
@@ -179,6 +199,33 @@ public class PhoneReceiptBean {
         } catch (IOException e) {
             throw new FacesException("Error in writing captured image.Trying to copy image to [" + photoIdLocation + "]", e);
         }
+        imageCaptured=true; 
+        imageExternalPath=Constants.BASE_IMAGE_LOCATION + photoIdImageName + ".jpeg" ; 
     }
 
+    public void confirmSubmission(){
+//        make database entry
+//        Generate PDF from submitted data
+        
+//        Reset Bean
+        resetBean();
+    }
+    
+    
+    private void resetBean(){
+    storeName = "" ;
+    phoneModel = "" ;
+    phoneMake = "" ;
+    phoneCondition = "";
+    amount = 0 ;
+    sellerName = "" ;
+    sellerContactNumber = "";
+    sellerEmailId = "";
+    sellerPhotoIdType = "";
+    photoIdLocation = "";
+    photoIdImageName = ""; 
+    storeManager = "" ;
+    sellerSignature = "";
+    tradeDate = new Date() ;
+    }
 }

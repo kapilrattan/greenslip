@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -15,28 +16,36 @@
                     <ui:include src="phonereceipt-header.xhtml" />
                 </ui:insert>
             </div>
-            <h:panelGrid columns="3" cellpadding="5">
-
-                <p:photoCam widgetVar="pc" listener="#{phoneReceiptBean.oncapture}" update="photo" />
-                <p:commandButton type="button" value="Capture" onclick="PF('pc').capture()"/>
-                <p:outputPanel id="photo">
-                    <p:outputLabel value="#{phoneReceiptBean.photoIdLocation}" />
-                    <img src="#{phoneReceiptBean.photoIdLocation}" />
-                    <p:graphicImage name="#{phoneReceiptBean.photoIdLocation}" rendered="#{not empty phoneReceiptBean.photoIdLocation}"/>
-                </p:outputPanel>
-            </h:panelGrid>            
-            <div align="left">
-                <p:commandButton value="Back" ajax="false" icon="ui-icon-back" validateClient="true" style="margin-right:10px" action="phone-details">
-                    <f:param name="stepIndex" value="0"/>
-                    <f:param name="i" value="1"/>
-                </p:commandButton>
-            </div>
-            <div align="right">
-                <p:commandButton value="Next" ajax="false" icon="ui-icon-next" validateClient="true" style="margin-right:10px" action="signature">
-                    <f:param name="stepIndex" value="2"/>
-                    <f:param name="i" value="1"/>
-                </p:commandButton>
-            </div>
+            <p:panel header="Photo Id">
+                <p:messages>
+                    <p:autoUpdate />
+                </p:messages>
+                <h:panelGrid columns="3" cellpadding="5">
+                    <p:photoCam widgetVar="pc" listener="#{phoneReceiptBean.oncapture}" update="photo"/>
+                    <p:commandButton type="button" value="Capture" onclick="PF('pc').capture()"/>
+                    <p:outputPanel id="photo">
+                        <c:if test="#{phoneReceiptBean.imageCaptured}">
+                            <img src="#{phoneReceiptBean.imageExternalPath}" alt="Photo Id"/>
+                        </c:if>
+                    </p:outputPanel>
+                </h:panelGrid> 
+            </p:panel>
+            <table width="100%">
+                <tr>
+                    <td align="left">
+                        <p:commandButton value="Back" ajax="false" icon="ui-icon-back" validateClient="true"  action="phone-details">
+                            <f:param name="stepIndex" value="0"/>
+                            <f:param name="i" value="1"/>
+                        </p:commandButton>
+                    </td>
+                    <td align="right">
+                        <p:commandButton value="Next" ajax="false" icon="ui-icon-next" validateClient="true"  action="signature">
+                            <f:param name="stepIndex" value="2"/>
+                            <f:param name="i" value="1"/>
+                        </p:commandButton>
+                    </td>
+                </tr>
+            </table>
         </h:form>
     </h:body>
 </html>
