@@ -5,73 +5,33 @@
  */
 package com.rsys.greenslip.phonereceipt.util;
 
+import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.rsys.greenslip.phonereceipt.bo.PhoneReceiptBean;
 import java.io.File;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
+
 
 /**
  *
  * @author krattan
  */
-public class PDFGenerator {
+public abstract class PDFGenerator extends PdfPageEventHelper {
+public abstract String generatePDF(PhoneReceiptBean phoneReceiptBean);
 
-    public String generatePDF(PhoneReceiptBean phoneReceiptBean) {
-        String pdfFileName = getRandomFileName();
-        String pdfFilePath = getPDFLocation() + File.separator + pdfFileName;
-        System.out.println("PDF path [" + pdfFilePath + "]");
-        try {
-            PDDocument doc = new PDDocument();
-            PDPage page = new PDPage();
-            doc.addPage(page);
-            PDFont font = PDType1Font.HELVETICA_BOLD;
-            try (PDPageContentStream contents = new PDPageContentStream(doc, page)) {
-                contents.beginText();
-                contents.setFont(font, 12);
-                contents.newLineAtOffset(100, 700);
-                contents.showText("Hello World !!!!");
-                contents.endText();
-            }
-            doc.save(pdfFilePath);
-            System.out.println(pdfFilePath);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        return pdfFilePath;
-    }
 
-    private String getRandomFileName() {
+    public String getRandomFileName() {
         int i = (int) (Math.random() * 10000000);
-        return String.valueOf(i);
+        return String.valueOf(i)+".pdf";
     }
 
-    private String getPDFLocation() {
+    public String getPDFLocation() {
         String pdfLocation = "";
-        Date today = new Date();
-        String folderName = String.valueOf(today.getYear()) + String.valueOf(today.getMonth()) + String.valueOf(today.getDate());
-        pdfLocation = Constants.BASE_PDF_LOCATION + File.separator + folderName;
+        String folderName = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        pdfLocation = Constants.BASE_PDF_LOCATION +  folderName;
         File directory = new File(pdfLocation);
         if (!directory.exists()) {
-            if (directory.mkdir()) {
+            if (directory.mkdirs()) {
                 System.out.println(pdfLocation +" : Folder/Directory is created successfully");
             } else {
                 System.out.println(pdfLocation +": Directory/Folder creation failed!!!");
@@ -79,5 +39,56 @@ public class PDFGenerator {
         }
 
         return pdfLocation;
+    }
+
+    public String getHeader() {
+        StringBuffer  heardString = new StringBuffer("");  ;
+        heardString.append("<table style='width: 100%;font-size:8pt;' border='0'>");
+        heardString.append("<tbody>");
+        heardString.append("<tr>");
+        heardString.append("<td style='width: 20%;' align='left' valign='top'><img ");
+        heardString.append("src='"+PropertiesManager.getInstance().getPropertyValue(Constants.PROPERTY_HEADER_LOGO_FILE)+"'");
+        heardString.append("width='150pt' height='100pt' /></td>");
+        heardString.append("<td style='width: 40%;'>&nbsp;</td>");
+        heardString.append("<td style='width: 20%;' align='left' valign='top'>");
+        heardString.append("<table style='hight: 50%;' border='0' cellspacing='0' cellpadding='0'>");
+        heardString.append("<tbody>");
+        heardString.append("<tr>");
+        heardString.append("<td style='width: 100%;' align='left' valign='top'>");
+        heardString.append(PropertiesManager.getInstance().getPropertyValue(Constants.PROPERTY_HEADER_TEXT_LINE1));
+        heardString.append("</td>");
+        heardString.append("</tr>");
+        heardString.append("<tr>");
+        heardString.append("<td style='width: 100%;' align='left' valign='top'>");
+        heardString.append(PropertiesManager.getInstance().getPropertyValue(Constants.PROPERTY_HEADER_TEXT_LINE2));
+        heardString.append("</td>");
+        heardString.append("</tr>");
+        heardString.append("<tr>");
+        heardString.append("<td style='width: 100%;' align='left' valign='top'>");
+        heardString.append(PropertiesManager.getInstance().getPropertyValue(Constants.PROPERTY_HEADER_TEXT_LINE3));
+        heardString.append("</td>");
+        heardString.append("</tr>");
+        heardString.append("<tr>");
+        heardString.append("<td style='width: 100%;' align='left' valign='top'>");
+        heardString.append(PropertiesManager.getInstance().getPropertyValue(Constants.PROPERTY_HEADER_TEXT_LINE4));
+        heardString.append("</td>");
+        heardString.append("</tr>");
+        heardString.append("</tbody>");
+        heardString.append("</table>");
+        heardString.append("</td>");
+        heardString.append("</tr>");
+        heardString.append("<tr>");
+        heardString.append("<td>Reference No __________</td>");
+        heardString.append("<td>&nbsp;</td>");
+        heardString.append("<td>Date __________</td>");
+        heardString.append("</tr>");
+        heardString.append("<tr>");
+        heardString.append("<td>&nbsp;</td>");
+        heardString.append("<td>&nbsp;</td>");
+        heardString.append("<td>&nbsp;</td>");
+        heardString.append("</tr>");
+        heardString.append("</tbody>");
+        heardString.append("</table>");
+        return heardString.toString();
     }
 }

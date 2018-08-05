@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -23,14 +24,21 @@
                 <p:messages>
                     <p:autoUpdate />
                 </p:messages>
-                <h:panelGrid columns="2" >
-                    <p:signature style="width:475px;height:300px" widgetVar="sig" value="#{phoneReceiptBean.sellerSignature}" required="true" guideline="true"/>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:signature style="width:475px;height:300px" widgetVar="sig" base64Value="#{phoneReceiptBean.signature}" required="true" guideline="false"/>
                     <p:outputPanel id="output">
-                        <p:signature style="width:475px;height:300px;" value="#{phoneReceiptBean.sellerSignature}" readonly="true"
-                                     rendered="#{not empty phoneReceiptBean.sellerSignature}" backgroundColor="#eaeaea" color="#03a9f4"/>
+                        <c:if test="#{phoneReceiptBean.signatureCaptured}">
+                            <table border="1">
+                                <tr>
+                                    <td>
+                                        <img src="#{phoneReceiptBean.signatureExternalPath}" alt="Signature" style="width:475px;height:300px;"/>
+                                    </td>
+                                </tr>                                
+                            </table>
+                        </c:if>
                     </p:outputPanel>
                     <h:panelGrid columns="2" cellpadding="5">
-                        <p:commandButton value="Submit" icon="ui-icon-check" update="output"/>
+                        <p:commandButton value="Submit" icon="ui-icon-check" action="#{phoneReceiptBean.captureSignature()}" update="output"/>
                         <p:commandButton value="Clear" icon="ui-icon-close" type="button" onclick="PF('sig').clear()"/>
                     </h:panelGrid>
                 </h:panelGrid>
