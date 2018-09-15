@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/custom-templates.css" type="text/css"/>
+
+    <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.1/typeahead.bundle.min.js"></script>
+    <script type="text/javascript">
+      var numbers = new Bloodhound({
+      datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.num); },
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      local: [
+      { num: 'one' },
+      { num: 'two' },
+      { num: 'three' },
+      { num: 'four' },
+      { num: 'five' },
+      { num: 'six' },
+      { num: 'seven' },
+      { num: 'eight' },
+      { num: 'nine' },
+      { num: 'ten' }
+      ]
+      });
+
+      numbers.initialize();
+
+      $('.typeahead').typeahead(null, {
+      displayKey: 'num',
+      source: numbers.ttAdapter()
+      });
+    </script>
+  </head>
+  <body>
+    <input class="typeahead" type="text" placeholder="numbers (1-10)" autocomplete="off" spellcheck="false" dir="auto" style="position: relative; vertical-align: top; background-color: transparent;">
+  </body>
+</html>

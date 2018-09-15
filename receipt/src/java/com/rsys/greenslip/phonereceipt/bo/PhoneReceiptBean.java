@@ -5,9 +5,13 @@
  */
 package com.rsys.greenslip.phonereceipt.bo;
 
+import com.rsys.greenslip.phonereceipt.dao.PhoneReceiptDAO;
+import com.rsys.greenslip.phonereceipt.dao.PhoneReceiptDAOImpl;
+import com.rsys.greenslip.phonereceipt.dto.ReceiptDTO;
 import com.rsys.greenslip.phonereceipt.util.Constants;
 import com.rsys.greenslip.phonereceipt.util.PDFGenerator;
 import com.rsys.greenslip.phonereceipt.util.SimplePDFGenerator;
+import com.sun.xml.rpc.processor.modeler.j2ee.xml.paramValueType;
 import java.io.ByteArrayInputStream;
 import java.util.Date;
 //import javax.faces.bean.RequestScoped;
@@ -43,6 +47,7 @@ import org.primefaces.model.StreamedContent;
 @SessionScoped
 public class PhoneReceiptBean {
 
+    private int receiptId;
     private String storeName;
     private String phoneModel;
     private String phoneMake;
@@ -245,6 +250,14 @@ public class PhoneReceiptBean {
         this.tradeDate = tradeDate;
     }
 
+    public int getReceiptId() {
+        return receiptId;
+    }
+
+    public void setReceiptId(int receiptId) {
+        this.receiptId = receiptId;
+    }
+
     /**
      * Creates a new instance of PhoneReceiptBean
      */
@@ -291,10 +304,14 @@ public class PhoneReceiptBean {
         pdfFilePath = pdfGenerator.generatePDF(this);
         this.streamedContent = getPDFData(pdfFilePath);
 //        make database entry 
+        ReceiptDTO receiptDTO = getReceiptDTO(); 
+        PhoneReceiptDAO phoneReceiptDAO = new PhoneReceiptDAOImpl(); 
+        int receiptId = phoneReceiptDAO.saveReceipt(receiptDTO);
         System.out.println("Make Database entry !!!!!");
 //        Reset Bean
 //        resetBean();
-
+        setReceiptId(receiptId);
+        
         return "printPdf";
     }
 
@@ -395,6 +412,26 @@ public class PhoneReceiptBean {
         }
 
         return fileLocation;
+    }
+
+    private ReceiptDTO getReceiptDTO() {
+        ReceiptDTO receiptDTO = new ReceiptDTO(); 
+        receiptDTO.setAmount(this.getAmount());
+        receiptDTO.setPdfFilePath(pdfFilePath);
+        receiptDTO.setPhoneCondition(phoneCondition);
+        receiptDTO.setPhoneMake(phoneMake);
+        receiptDTO.setPhoneModel(phoneModel);
+        receiptDTO.setPhotoIdLocation(photoIdLocation);
+        receiptDTO.setReceiptId(receiptId);
+        receiptDTO.setSellerContactNumber(sellerContactNumber);
+        receiptDTO.setSellerEmailId(sellerEmailId);
+        receiptDTO.setSellerName(sellerName);
+        receiptDTO.setSellerPhotoIdType(sellerPhotoIdType);
+        receiptDTO.setSellerSignature(signature);
+        receiptDTO.setStoreManager(storeManager);
+        receiptDTO.setStoreName(storeName);
+        receiptDTO.setTradeDate(tradeDate);
+        return receiptDTO; 
     }
 
 }
