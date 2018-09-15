@@ -17,7 +17,7 @@
             </div>
             
             <div>
-                <p:panel header="Phone Details">
+                <p:panel header="Purchase Details">
                     <p:messages>
                         <p:autoUpdate />
                     </p:messages>
@@ -32,11 +32,11 @@
                             <p:outputLabel for="tradeDate" value="Date :" />
                             <p:calendar id="tradeDate" pattern="dd-MMM-yyyy" showOn="button"  value="#{phoneReceiptBean.tradeDate}" />
 
-                            <h:outputLabel for="phoneMake" value="Phone Make :" />
+                            <h:outputLabel for="phoneMake" value="Make :" />
                             <p:inputText id="phoneMake" value="#{phoneReceiptBean.phoneMake}" required="true">
                                 <p:watermark for="phoneMake" value="Phone Make" />
                             </p:inputText>
-                            <h:outputLabel for="phoneModel" value="Phone Model :" />
+                            <h:outputLabel for="phoneModel" value="Model :" />
                             <p:inputText id="phoneModel" value="#{phoneReceiptBean.phoneModel}" required="true" label="Phone Model">
                                 <p:watermark for="phoneModel" value="Phone Model" />
                             </p:inputText>
@@ -62,6 +62,14 @@
                             <h:outputLabel for="sellerPhotoIdType" value="Photo Id Type :" />
                             <p:inputText id="sellerPhotoIdType" value="#{phoneReceiptBean.sellerPhotoIdType}" required="true" label="Photo Id Type">
                                 <p:watermark for="sellerPhotoIdType" value="Photo Id Type" />
+                            </p:inputText>
+                            <h:outputLabel for="amount" value="Amount Agreed and Paid :" />
+                            <p:inputText id="amount" value="#{phoneReceiptBean.amount}" required="true" label="Amount Agreed and Paid">
+                                <p:watermark for="amount" value="Amount Agreed and Paid" />
+                            </p:inputText>
+                            <h:outputLabel for="storeManager" value="Store Manager" />
+                            <p:inputText id="storeManager" value="#{phoneReceiptBean.storeManager}" required="true" label="Store Manager">
+                                <p:watermark for="storeManager" value="Store Manager" />
                             </p:inputText>
                         </h:panelGrid>
                     </div>
