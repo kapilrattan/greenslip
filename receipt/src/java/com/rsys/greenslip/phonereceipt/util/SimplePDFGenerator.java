@@ -9,18 +9,18 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.rsys.greenslip.phonereceipt.bo.PhoneReceiptBean;
+import com.rsys.greenslip.phonereceipt.dto.ReceiptDTO;
 import java.io.FileOutputStream;
 import java.io.StringReader;
 import java.util.List;
 
 public class SimplePDFGenerator extends PDFGenerator {
 
-    public String generatePDF(PhoneReceiptBean phoneReceiptBean) {
+    public String generatePDF(ReceiptDTO receiptDTO) {
         String pdfFileName = getRandomFileName();
         String pdfFilePath = getPDFLocation() + "/" + pdfFileName;
         try {
-            String contentString = getContent(phoneReceiptBean);
+            String contentString = getContent(receiptDTO);
             PdfWriter writer;
             Document document = new Document();
             writer = PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
@@ -55,7 +55,7 @@ public class SimplePDFGenerator extends PDFGenerator {
         return pdfFilePath;
     }
     /*
-     private String getContent(PhoneReceiptBean phoneReceiptBean) {
+     private String getContent(ReceiptManagerBean phoneReceiptBean) {
      StringBuffer contentString = new StringBuffer("");
      contentString.append("<table style='width: 100%;font-size:8pt;' border='0'>");
      contentString.append("<tbody>");
@@ -77,38 +77,38 @@ public class SimplePDFGenerator extends PDFGenerator {
      }
      */
 
-    private String getContent(PhoneReceiptBean phoneReceiptBean) {
+    private String getContent(ReceiptDTO receiptDTO) {
         StringBuffer contentString = new StringBuffer("");
         contentString.append("<table border='0' align='center' cellpadding='10' cellspacing='2'>");
         contentString.append("<tr>");
-        contentString.append("<td colspan='4'><img width='400px' height='200px' src=" + phoneReceiptBean.getLogoLocation() + "></img></td>");
+        contentString.append("<td colspan='4'><img width='400px' height='200px' src=" + receiptDTO.getLogoLocation() + "></img></td>");
         contentString.append("</tr>");
         contentString.append("<tr>");
-        contentString.append("<td>Store</td><td><b>" + phoneReceiptBean.getStoreName() + "</b></td>");
-        contentString.append("<td>Date</td><td><b>" + phoneReceiptBean.getTradeDate() + "</b></td>");
+        contentString.append("<td>Store</td><td><b>" + receiptDTO.getStoreName() + "</b></td>");
+        contentString.append("<td>Date</td><td><b>" + receiptDTO.getTradeDate() + "</b></td>");
         contentString.append("</tr>");
         contentString.append("<tr>");
-        contentString.append("<td>Phone Make</td><td><b>" + phoneReceiptBean.getPhoneMake() + "</b></td>");
-        contentString.append("<td>Phone Model</td><td><b>" + phoneReceiptBean.getPhoneModel() + "</b></td>");
+        contentString.append("<td>Phone Make</td><td><b>" + receiptDTO.getPhoneMake() + "</b></td>");
+        contentString.append("<td>Phone Model</td><td><b>" + receiptDTO.getPhoneModel() + "</b></td>");
         contentString.append("</tr>");
         contentString.append("<tr>");
-        contentString.append("<td>Phone Condition</td><td><b>" + phoneReceiptBean.getPhoneCondition() + "</b></td>");
-        contentString.append("<td>IMEI Number</td><td><b>" + phoneReceiptBean.getPhoneModel() + "</b></td>");
+        contentString.append("<td>Phone Condition</td><td><b>" + receiptDTO.getPhoneCondition() + "</b></td>");
+        contentString.append("<td>IMEI Number</td><td><b>" + receiptDTO.getPhoneModel() + "</b></td>");
         contentString.append("</tr>");
         contentString.append("<tr>");
-        contentString.append("<td>Seller Name</td><td><b>" + phoneReceiptBean.getSellerName() + "</b></td>");
-        contentString.append("<td>Contact Number</td><td><b>" + phoneReceiptBean.getSellerContactNumber() + "</b></td>");
+        contentString.append("<td>Seller Name</td><td><b>" + receiptDTO.getSellerName() + "</b></td>");
+        contentString.append("<td>Contact Number</td><td><b>" + receiptDTO.getSellerContactNumber() + "</b></td>");
         contentString.append("</tr>");
         contentString.append("<tr>");
-        contentString.append("<td>Email Id</td><td><b>" + phoneReceiptBean.getSellerEmailId() + "</b></td>");
+        contentString.append("<td>Email Id</td><td><b>" + receiptDTO.getSellerEmailId() + "</b></td>");
         contentString.append("<td>&nbsp;</td><td>&nbsp;</td>");
         contentString.append("</tr>");
         contentString.append("<tr>");
         contentString.append("<td colspan='2'>");
-        contentString.append("<img src=" + phoneReceiptBean.getPhotoIdInternalPath()+ " alt='Photo Id'/>");
+        contentString.append("<img src=" + receiptDTO.getPhotoIdLocation()+ " alt='Photo Id'/>");
         contentString.append("</td>");
         contentString.append("<td colspan='2'>");
-        contentString.append("<img src=" + phoneReceiptBean.getSignatureInternalPath() + " alt='Photo Id'/>");
+        contentString.append("<img src=" + receiptDTO.getSignatureInternalPath() + " alt='Photo Id'/>");
         contentString.append("</td>");
         contentString.append("</tr>");
         contentString.append("</table>");

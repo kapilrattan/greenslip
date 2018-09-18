@@ -11,7 +11,7 @@ package com.rsys.greenslip.phonereceipt.util;
  */
 public class Constants {
 
-    public static final String BASE_PDF_LOCATION = "D:/junk/greenslip/";
+    public static final String PROPERTY_BASE_PDF_LOCATION = "file.target.location";
     public static final String BASE_IMAGE_LOCATION = "http://localhost:8080/receipt/images/";
     public static String PROPERTY_HEADER_LOGO_FILE = "header.logo.file";
     public static String PROPERTY_HEADER_TEXT_LINE1 = "header.content.line1";

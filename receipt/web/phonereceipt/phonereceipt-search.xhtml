@@ -10,6 +10,11 @@
     </h:head>
     <h:body>
         <h:form>
+            <div id="header">
+                <ui:insert name="commonHeader">
+                    <ui:include src="/common/header.xhtml" />
+                </ui:insert>
+            </div>
             <div>
                 <p:panel header="Receipt Search">
                     <p:messages>
@@ -19,32 +24,32 @@
                         <h:panelGrid id="phoneDetailsGrid" columns="4" cellpadding="5" cellspacing="10" border="0">
 
                             <p:outputLabel for="fromTradeDate" value="From Date :" />
-                            <p:calendar id="fromTradeDate" pattern="dd-MMM-yyyy" showOn="button"  value="#{receiptSearchBean.tradeDateFrom}" />
+                            <p:calendar id="fromTradeDate" pattern="dd-MMM-yyyy" showOn="button"  value="#{receiptManagerBean.receiptSearchDTO.tradeDateFrom}" />
                             <p:outputLabel for="toTradeDate" value="To Date :" />
-                            <p:calendar id="toTradeDate" pattern="dd-MMM-yyyy" showOn="button"  value="#{receiptSearchBean.tradeDateTo}" />
+                            <p:calendar id="toTradeDate" pattern="dd-MMM-yyyy" showOn="button"  value="#{receiptManagerBean.receiptSearchDTO.tradeDateTo}" />
 
                             <h:outputLabel for="sellerName" value="Seller Name :" />
-                            <p:inputText id="sellerName" value="#{receiptSearchBean.sellerName}">
+                            <p:inputText id="sellerName" value="#{receiptManagerBean.receiptSearchDTO.sellerName}">
                                 <p:watermark for="sellerName" value="Seller Name" />
                             </p:inputText>
 
                             <h:outputLabel for="sellerContactNumber" value="Seller Contact Number :" />
-                            <p:inputText id="sellerContactNumber" value="#{receiptSearchBean.sellerContactNumber}">
+                            <p:inputText id="sellerContactNumber" value="#{receiptManagerBean.receiptSearchDTO.sellerContactNumber}">
                                 <p:watermark for="sellerContactNumber" value="Seller Contact Number" />
                             </p:inputText>
 
                             <h:outputLabel for="imeiNumber" value="IMEI Number :" />
-                            <p:inputText id="imeiNumber" value="#{receiptSearchBean.imeiNumber}">
+                            <p:inputText id="imeiNumber" value="#{receiptManagerBean.receiptSearchDTO.imeiNumber}">
                                 <p:watermark for="imeiNumber" value="IMEI Number" />
                             </p:inputText>
 
                             <h:outputLabel value="" />
                             <h:outputLabel value="" />
-                            <p:commandButton value="Search" icon="ui-icon-search" validateClient="true" action="#{receiptSearchBean.searchReceipts()}" update="" />
-
+                            <p:commandButton value="Search" icon="ui-icon-search" validateClient="true" action="#{receiptManagerBean.searchReceipts()}" update="receiptSearch" />
+                            <p:commandButton value="Create New" icon="ui-icon-new" action="phone-details"/>
                         </h:panelGrid>
                     </div>
-                    <p:dataTable id="receiptSearch" var="receipt" value="#{receiptSearchBean.searchResultList}">
+                    <p:dataTable id="receiptSearch" var="receipt" value="#{receiptManagerBean.receiptSearchDTO.searchResultList}">
                         <p:column headerText="Receipt Id">
                             <h:outputText value="#{receipt.receiptId}"/>
                         </p:column>
@@ -67,8 +72,8 @@
                             <h:outputText value="#{receipt.phoneModel}"/>
                         </p:column>
                         <p:column style="width:32px;text-align: center">
-                            <p:commandButton oncomplete="PF('carDialog').show()" icon="ui-icon-search" title="View">
-                                <f:setPropertyActionListener value="#{receipt}" target="#{receiptSearchBean.selectedReceipt}" />
+                            <p:commandButton oncomplete="PF('carDialog').show()" action="printPdf" icon="ui-icon-search" title="View">
+                                <f:setPropertyActionListener value="#{receipt}" target="#{receiptManagerBean.selectedReceiptDTO}" />
                             </p:commandButton>
                         </p:column>                        
                     </p:dataTable>

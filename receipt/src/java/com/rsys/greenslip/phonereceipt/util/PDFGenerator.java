@@ -6,7 +6,7 @@
 package com.rsys.greenslip.phonereceipt.util;
 
 import com.itextpdf.text.pdf.PdfPageEventHelper;
-import com.rsys.greenslip.phonereceipt.bo.PhoneReceiptBean;
+import com.rsys.greenslip.phonereceipt.dto.ReceiptDTO;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,7 +17,7 @@ import java.util.Date;
  * @author krattan
  */
 public abstract class PDFGenerator extends PdfPageEventHelper {
-public abstract String generatePDF(PhoneReceiptBean phoneReceiptBean);
+public abstract String generatePDF(ReceiptDTO receiptDTO);
 
 
     public String getRandomFileName() {
@@ -28,7 +28,7 @@ public abstract String generatePDF(PhoneReceiptBean phoneReceiptBean);
     public String getPDFLocation() {
         String pdfLocation = "";
         String folderName = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        pdfLocation = Constants.BASE_PDF_LOCATION +  folderName;
+        pdfLocation = PropertiesManager.getInstance().getPropertyValue(Constants.PROPERTY_BASE_PDF_LOCATION) +  folderName;
         File directory = new File(pdfLocation);
         if (!directory.exists()) {
             if (directory.mkdirs()) {

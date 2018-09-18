@@ -15,63 +15,107 @@
                     <ui:include src="phonereceipt-header.xhtml" />
                 </ui:insert>
             </div>
-            
+
             <div>
                 <p:panel header="Purchase Details">
                     <p:messages>
                         <p:autoUpdate />
                     </p:messages>
                     <div align="center">
-                        <h:panelGrid id="phoneDetailsGrid" columns="4" cellpadding="5" cellspacing="10" border="0">
-                            <p:outputLabel for="storeName" value="Store :" />
-                            <p:selectOneButton id="storeName" value="#{phoneReceiptBean.storeName}">
-                                <f:selectItem itemLabel="Central" itemValue="Central" />
-                                <f:selectItem itemLabel="Newtown" itemValue="Newtown" />
-                            </p:selectOneButton>
+                        <table id="phoneDetailsGrid" columns="4" cellpadding="5" cellspacing="10" border="0">
+                            <tr>
+                                <td>
+                                    <p:outputLabel for="storeName" value="Store :" />
+                                </td>
+                                <td>
+                                    <p:selectOneButton id="storeName" value="#{receiptManagerBean.receiptDTO.storeName}">
+                                        <f:selectItem itemLabel="Central" itemValue="Central" />
+                                        <f:selectItem itemLabel="Newtown" itemValue="Newtown" />
+                                    </p:selectOneButton>
+                                </td><td>                                
+                                    <p:outputLabel for="tradeDate" value="Date :" />
+                                </td><td>
+                                    <p:calendar id="tradeDate" pattern="dd-MMM-yyyy" showOn="button"  value="#{receiptManagerBean.receiptDTO.tradeDate}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputLabel for="phoneMake" value="Make :" />
+                                </td><td>
+                                    <p:inputText id="phoneMake" value="#{receiptManagerBean.receiptDTO.phoneMake}" required="true">
+                                        <p:watermark for="phoneMake" value="Phone Make" />
+                                    </p:inputText>
+                                </td><td>
 
-                            <p:outputLabel for="tradeDate" value="Date :" />
-                            <p:calendar id="tradeDate" pattern="dd-MMM-yyyy" showOn="button"  value="#{phoneReceiptBean.tradeDate}" />
-
-                            <h:outputLabel for="phoneMake" value="Make :" />
-                            <p:inputText id="phoneMake" value="#{phoneReceiptBean.phoneMake}" required="true">
-                                <p:watermark for="phoneMake" value="Phone Make" />
-                            </p:inputText>
-                            <h:outputLabel for="phoneModel" value="Model :" />
-                            <p:inputText id="phoneModel" value="#{phoneReceiptBean.phoneModel}" required="true" label="Phone Model">
-                                <p:watermark for="phoneModel" value="Phone Model" />
-                            </p:inputText>
-
-                            <h:outputText value="Phone Condition :" />
-                            <p:selectOneButton value="#{phoneReceiptBean.phoneCondition}">
-                                <f:selectItem itemLabel="Used" itemValue="Used" />
-                                <f:selectItem itemLabel="New" itemValue="New" />
-                            </p:selectOneButton>
-
-                            <h:outputLabel for="sellerName" value="Seller Name :" />
-                            <p:inputText id="sellerName" value="#{phoneReceiptBean.sellerName}" required="true" label="Seller Name">
-                                <p:watermark for="sellerName" value="Seller Name" />
-                            </p:inputText>
-                            <h:outputLabel for="sellerContactNumber" value="Contact Number :" />
-                            <p:inputText id="sellerContactNumber" value="#{phoneReceiptBean.sellerContactNumber}" required="true" label="Contact Number">
-                                <p:watermark for="sellerContactNumber" value="Contact Number" />
-                            </p:inputText>
-                            <h:outputLabel for="sellerEmailId" value="Email Id :" />
-                            <p:inputText id="sellerEmailId" value="#{phoneReceiptBean.sellerEmailId}" required="true" label="Email Id">
-                                <p:watermark for="sellerEmailId" value="Email Id" />
-                            </p:inputText>
-                            <h:outputLabel for="sellerPhotoIdType" value="Photo Id Type :" />
-                            <p:inputText id="sellerPhotoIdType" value="#{phoneReceiptBean.sellerPhotoIdType}" required="true" label="Photo Id Type">
-                                <p:watermark for="sellerPhotoIdType" value="Photo Id Type" />
-                            </p:inputText>
-                            <h:outputLabel for="amount" value="Amount Agreed and Paid :" />
-                            <p:inputText id="amount" value="#{phoneReceiptBean.amount}" required="true" label="Amount Agreed and Paid">
-                                <p:watermark for="amount" value="Amount Agreed and Paid" />
-                            </p:inputText>
-                            <h:outputLabel for="storeManager" value="Store Manager" />
-                            <p:inputText id="storeManager" value="#{phoneReceiptBean.storeManager}" required="true" label="Store Manager">
-                                <p:watermark for="storeManager" value="Store Manager" />
-                            </p:inputText>
-                        </h:panelGrid>
+                                    <h:outputLabel for="phoneModel" value="Model :" />
+                                </td><td>
+                                    <p:inputText id="phoneModel" value="#{receiptManagerBean.receiptDTO.phoneModel}" required="true" label="Phone Model">
+                                        <p:watermark for="phoneModel" value="Phone Model" />
+                                    </p:inputText>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputText value="Phone Condition :" />
+                                </td><td>
+                                    <p:selectOneButton value="#{receiptManagerBean.receiptDTO.phoneCondition}">
+                                        <f:selectItem itemLabel="Used" itemValue="Used" />
+                                        <f:selectItem itemLabel="New" itemValue="New" />
+                                    </p:selectOneButton>
+                                </td><td>
+                                    <h:outputText value="IMEI Number :" />
+                                </td><td>
+                                    <p:inputText id="imeiNumber" value="#{receiptManagerBean.receiptDTO.imeiNumber}" required="false" label="IMEI Number">
+                                        <p:watermark for="imeiNumber" value="IMEI Number" />
+                                    </p:inputText>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputLabel for="sellerName" value="Seller Name :" />
+                                </td><td>
+                                    <p:inputText id="sellerName" value="#{receiptManagerBean.receiptDTO.sellerName}" required="true" label="Seller Name">
+                                        <p:watermark for="sellerName" value="Seller Name" />
+                                    </p:inputText>
+                                </td><td>
+                                    <h:outputLabel for="sellerContactNumber" value="Contact Number :" />
+                                </td><td>
+                                    <p:inputText id="sellerContactNumber" value="#{receiptManagerBean.receiptDTO.sellerContactNumber}" required="true" label="Contact Number">
+                                        <p:watermark for="sellerContactNumber" value="Contact Number" />
+                                    </p:inputText>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputLabel for="sellerEmailId" value="Email Id :" />
+                                </td><td>
+                                    <p:inputText id="sellerEmailId" value="#{receiptManagerBean.receiptDTO.sellerEmailId}" required="true" label="Email Id">
+                                        <p:watermark for="sellerEmailId" value="Email Id" />
+                                    </p:inputText>
+                                </td><td>
+                                    <h:outputLabel for="sellerPhotoIdType" value="Photo Id Type :" />
+                                </td><td>
+                                    <p:inputText id="sellerPhotoIdType" value="#{receiptManagerBean.receiptDTO.sellerPhotoIdType}" required="true" label="Photo Id Type">
+                                        <p:watermark for="sellerPhotoIdType" value="Photo Id Type" />
+                                    </p:inputText>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputLabel for="amount" value="Amount Agreed and Paid :" />
+                                </td><td>
+                                    <p:inputText id="amount" value="#{receiptManagerBean.receiptDTO.amount}" required="true" label="Amount Agreed and Paid">
+                                        <p:watermark for="amount" value="Amount Agreed and Paid" />
+                                    </p:inputText>
+                                </td><td>
+                                    <h:outputLabel for="storeManager" value="Store Manager" />
+                                </td><td>
+                                    <p:inputText id="storeManager" value="#{receiptManagerBean.receiptDTO.storeManager}" required="true" label="Store Manager">
+                                        <p:watermark for="storeManager" value="Store Manager" />
+                                    </p:inputText>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </p:panel>
             </div>
@@ -83,6 +127,11 @@
             </div>
 
         </h:form>
+        <script src="../js/handlebars.js"></script>
+        <script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/typeahead.bundle.js"></script>
+        <script src="../js/bloodhound.js"></script>
     </h:body>
+
 </html>
 

@@ -21,11 +21,11 @@
                     <p:autoUpdate />
                 </p:messages>
                 <h:panelGrid columns="3" cellpadding="5">
-                    <p:photoCam widgetVar="pc" listener="#{phoneReceiptBean.oncapture}" update="photo"/>
+                    <p:photoCam widgetVar="pc" listener="#{receiptManagerBean.oncapture}" update="photo"/>
                     <p:commandButton type="button" value="Capture" onclick="PF('pc').capture()"/>
                     <p:outputPanel id="photo">
-                        <c:if test="#{phoneReceiptBean.imageCaptured}">
-                            <img src="#{phoneReceiptBean.imageExternalPath}" alt="Photo Id"/>
+                        <c:if test="#{receiptManagerBean.receiptDTO.imageCaptured}">
+                            <img src="#{receiptManagerBean.receiptDTO.imageExternalPath}" alt="Photo Id"/>
                         </c:if>
                     </p:outputPanel>
                 </h:panelGrid> 

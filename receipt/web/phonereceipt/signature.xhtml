@@ -25,20 +25,20 @@
                     <p:autoUpdate />
                 </p:messages>
                 <h:panelGrid columns="2" cellpadding="5">
-                    <p:signature style="width:475px;height:300px" widgetVar="sig" base64Value="#{phoneReceiptBean.signature}" required="true" guideline="false"/>
+                    <p:signature style="width:475px;height:300px" widgetVar="sig" base64Value="#{receiptManagerBean.receiptDTO.signature}" guideline="false"/>
                     <p:outputPanel id="output">
-                        <c:if test="#{phoneReceiptBean.signatureCaptured}">
+                        <c:if test="#{receiptManagerBean.receiptDTO.signatureCaptured}">
                             <table border="1">
                                 <tr>
                                     <td>
-                                        <img src="#{phoneReceiptBean.signatureExternalPath}" alt="Signature" style="width:475px;height:300px;"/>
+                                        <img src="#{receiptManagerBean.receiptDTO.signatureExternalPath}" alt="Signature" style="width:475px;height:300px;"/>
                                     </td>
                                 </tr>                                
                             </table>
                         </c:if>
                     </p:outputPanel>
                     <h:panelGrid columns="2" cellpadding="5">
-                        <p:commandButton value="Submit" icon="ui-icon-check" action="#{phoneReceiptBean.captureSignature()}" update="output"/>
+                        <p:commandButton value="Submit" icon="ui-icon-check" action="#{receiptManagerBean.captureSignature()}" update="output"/>
                         <p:commandButton value="Clear" icon="ui-icon-close" type="button" onclick="PF('sig').clear()"/>
                     </h:panelGrid>
                 </h:panelGrid>
