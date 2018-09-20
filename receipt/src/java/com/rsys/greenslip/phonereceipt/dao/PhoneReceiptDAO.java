@@ -5,6 +5,7 @@
  */
 package com.rsys.greenslip.phonereceipt.dao;
 
+import com.rsys.greenslip.phonereceipt.dto.DropdownResourceDTO;
 import com.rsys.greenslip.phonereceipt.dto.ReceiptDTO;
 import java.util.Date;
 import java.util.List;
@@ -20,4 +21,6 @@ public interface PhoneReceiptDAO {
     public List<ReceiptDTO> getReceiptListByIMEI(String imei); 
     public List<ReceiptDTO> getReceiptListBySellerName(String sellerName); 
     public List<ReceiptDTO> getReceiptListBySellerContact(String sellerContact); 
+    public List<DropdownResourceDTO> getDropdownResource(String resource , String resourceQuery); 
+    public String addDropdownResource(String resource , String resourceValue); 
 }

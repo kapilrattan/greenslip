@@ -7,8 +7,10 @@ package com.rsys.greenslip.phonereceipt.bo;
 
 import com.rsys.greenslip.phonereceipt.dao.PhoneReceiptDAO;
 import com.rsys.greenslip.phonereceipt.dao.PhoneReceiptDAOImpl;
+import com.rsys.greenslip.phonereceipt.dto.DropdownResourceDTO;
 import com.rsys.greenslip.phonereceipt.dto.ReceiptDTO;
 import com.rsys.greenslip.phonereceipt.dto.ReceiptSearchDTO;
+import com.rsys.greenslip.phonereceipt.service.DropDownResource;
 import com.rsys.greenslip.phonereceipt.util.Constants;
 import com.rsys.greenslip.phonereceipt.util.PDFGenerator;
 import com.rsys.greenslip.phonereceipt.util.SimplePDFGenerator;
@@ -39,6 +41,15 @@ public class ReceiptManagerBean {
 private ReceiptDTO receiptDTO = new ReceiptDTO(); 
 private ReceiptDTO selectedReceiptDTO = new ReceiptDTO() ; 
 private ReceiptSearchDTO receiptSearchDTO = new ReceiptSearchDTO(); 
+private DropdownResourceDTO dropdownResourceDTO = new DropdownResourceDTO(); 
+
+    public DropdownResourceDTO getDropdownResourceDTO() {
+        return dropdownResourceDTO;
+    }
+
+    public void setDropdownResourceDTO(DropdownResourceDTO dropdownResourceDTO) {
+        this.dropdownResourceDTO = dropdownResourceDTO;
+    }
 
 
     public ReceiptSearchDTO getReceiptSearchDTO() {
@@ -101,6 +112,26 @@ private ReceiptSearchDTO receiptSearchDTO = new ReceiptSearchDTO();
         receiptDTO.setImageExternalPath(imageExternalPath);
     }
 
+    public void onCaptureBackImage(CaptureEvent captureEvent) {
+        receiptDTO.setPhotoIdBackImageName(getRandomImageName());
+        byte[] data = captureEvent.getData();
+
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+//        photoIdLocation = "D:"+ File.separator + "greenslip"  + File.separator + "images" + File.separator + "photoid" + File.separator + photoIdImageName + ".jpeg";
+        String photoIdLocation = externalContext.getRealPath("") + File.separator + "images" + File.separator + "photoid" + File.separator + receiptDTO.getPhotoIdBackImageName() + ".jpeg";
+        receiptDTO.setPhotoIdBackLocation(photoIdLocation);
+        FileImageOutputStream imageOutput;
+        try {
+            imageOutput = new FileImageOutputStream(new File(photoIdLocation));
+            imageOutput.write(data, 0, data.length);
+            imageOutput.close();
+        } catch (IOException e) {
+            throw new FacesException("Error in writing captured image.Trying to copy image to [" + photoIdLocation + "]", e);
+        }
+        receiptDTO.setBackImageCaptured(true);
+        String imageExternalPath = Constants.BASE_IMAGE_LOCATION + "photoid/" + receiptDTO.getPhotoIdBackImageName() + ".jpeg";
+        receiptDTO.setBackImageExternalPath(imageExternalPath);
+    }    
     public String confirmSubmission() {
         PDFGenerator pdfGenerator = new SimplePDFGenerator();
         String pdfFilePath = pdfGenerator.generatePDF(receiptDTO);
@@ -156,5 +187,30 @@ private ReceiptSearchDTO receiptSearchDTO = new ReceiptSearchDTO();
         PhoneReceiptDAO phoneReceiptDAO = new PhoneReceiptDAOImpl();
         List<ReceiptDTO> searchResult = phoneReceiptDAO.getReceiptList();
         receiptSearchDTO.setSearchResultList(searchResult);
+    }
+    
+    public String photoIdNextStage(){
+        String nextStage = "" ; 
+        if(receiptDTO.getCaptureBackImage().equalsIgnoreCase("2")){
+            nextStage = "photo-id-back"; 
+        }else{
+            nextStage = "signature";
+        }
+        return nextStage; 
+    }
+    
+    public List<DropdownResourceDTO> completePhoneModel(String queryStrinrg){
+        System.out.println("Query String ["+queryStrinrg+"]");
+        PhoneReceiptDAO phoneReceiptDAO = new PhoneReceiptDAOImpl(); 
+        List<DropdownResourceDTO> phoneModelList = phoneReceiptDAO.getDropdownResource("phonemodel", queryStrinrg); 
+        return phoneModelList;
+    }
+    
+    public void addPhoneModel(){
+        PhoneReceiptDAO phoneReceiptDAO = new PhoneReceiptDAOImpl();
+        String resourceValue = dropdownResourceDTO.getValue(); 
+        System.out.println("Add Phone Model ["+resourceValue+"]") ; 
+        String result = phoneReceiptDAO.addDropdownResource(Constants.RESOURCE_PHONE_MODEL,resourceValue);
+        System.out.println("Phone Model Added at Index ["+result+"]"); 
     }
 }

@@ -21,15 +21,13 @@
                     <p:autoUpdate />
                 </p:messages>
                 <h:panelGrid columns="3" cellpadding="5">
-                    <p:photoCam widgetVar="pc" listener="#{receiptManagerBean.oncapture}" update="photo"/>
+                    <p:photoCam widgetVar="pc" listener="#{receiptManagerBean.onCaptureBackImage}" update="photo"/>
                     <p:commandButton type="button" value="Capture" onclick="PF('pc').capture()"/>
                     <p:outputPanel id="photo">
-                        <c:if test="#{receiptManagerBean.receiptDTO.imageCaptured}">
-                            <img src="#{receiptManagerBean.receiptDTO.imageExternalPath}" alt="Photo Id"/>
+                        <c:if test="#{receiptManagerBean.receiptDTO.backImageCaptured}">
+                            <img src="#{receiptManagerBean.receiptDTO.backImageExternalPath}" alt="Photo Id"/>
                         </c:if>
                     </p:outputPanel>
-                    <p:outputLabel for="captureBackImage" value="Capture Back Image"/>
-                    <p:triStateCheckbox id="captureBackImage" value="#{receiptManagerBean.receiptDTO.captureBackImage}" /> 
                 </h:panelGrid> 
             </p:panel>
             <table width="100%">
@@ -41,7 +39,7 @@
                         </p:commandButton>
                     </td>
                     <td align="right">
-                        <p:commandButton value="Next" ajax="false" icon="ui-icon-next" validateClient="true"  action="#{receiptManagerBean.photoIdNextStage}">
+                        <p:commandButton value="Next" ajax="false" icon="ui-icon-next" validateClient="true"  action="signature">
                             <f:param name="stepIndex" value="2"/>
                             <f:param name="i" value="1"/>
                         </p:commandButton>

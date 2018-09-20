@@ -27,12 +27,15 @@ public class ReceiptDTO {
     private String sellerPhotoIdType;
     private String photoIdLocation;
     private String photoIdImageName;
+    private String photoIdBackLocation;
+    private String photoIdBackImageName;
     private String storeManager;
     private String sellerSignature;
     @Past
     private Date tradeDate = new Date();
     private boolean imageCaptured;
     private String imageExternalPath;
+    private String backImageExternalPath;
     private String pdfFilePath;
     private String logoLocation ; 
     private String signature;
@@ -40,7 +43,26 @@ public class ReceiptDTO {
     private String signatureInternalPath;
     private String imeiNumber;
     private boolean signatureCaptured = false;
+    private boolean backImageCaptured = false;
+    private String captureBackImage = "2" ;
 
+    public String getCaptureBackImage() {
+        return captureBackImage;
+    }
+
+    public void setCaptureBackImage(String captureBackImage) {
+        this.captureBackImage = captureBackImage;
+    }
+    
+
+    public boolean isBackImageCaptured() {
+        return backImageCaptured;
+    }
+
+    public void setBackImageCaptured(boolean backImageCaptured) {
+        this.backImageCaptured = backImageCaptured;
+    }
+    
     public boolean isImageCaptured() {
         return imageCaptured;
     }
@@ -55,6 +77,13 @@ public class ReceiptDTO {
 
     public void setImageExternalPath(String imageExternalPath) {
         this.imageExternalPath = imageExternalPath;
+    }
+    public String getBackImageExternalPath() {
+        return backImageExternalPath;
+    }
+
+    public void setBackImageExternalPath(String imageExternalPath) {
+        this.backImageExternalPath = imageExternalPath;
     }
 
     public String getLogoLocation() {
@@ -233,6 +262,24 @@ public class ReceiptDTO {
     public void setPdfFilePath(String pdfFilePath) {
         this.pdfFilePath = pdfFilePath;
     }
+
+    public String getPhotoIdBackLocation() {
+        return photoIdBackLocation;
+    }
+
+    public void setPhotoIdBackLocation(String photoIdBackLocation) {
+        this.photoIdBackLocation = photoIdBackLocation;
+    }
+
+    public String getPhotoIdBackImageName() {
+        return photoIdBackImageName;
+    }
+
+    public void setPhotoIdBackImageName(String photoIdBackImageName) {
+        this.photoIdBackImageName = photoIdBackImageName;
+    }
+    
+    
 /*
     private ReceiptDTO getReceiptDTO() {
         ReceiptDTO receiptDTO = new ReceiptDTO(); 

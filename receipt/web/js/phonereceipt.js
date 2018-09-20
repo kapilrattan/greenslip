@@ -1,24 +1,18 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-// Instantiate the Bloodhound suggestion engine
-var movies = new Bloodhound({
+var phonemodels = new Bloodhound({
     datumTokenizer: function (datum) {
         return Bloodhound.tokenizers.whitespace(datum.value);
     },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     remote: {
-        url: 'http://api.themoviedb.org/3/search/movie?query=%QUERY&api_key=f22e6ce68f5e5002e71c20bcba477e7d',
+        url: 'http://localhost:8080/receipt/DropdownResourceServlet?action=get&resource=phonemodel&resourceValue=%QUERY',
         wildcard: '%QUERY',
-        filter: function (movies) {
-            console.log(movies);
+        filter: function (phonemodels) {
+            console.log(phonemodels);
             // Map the remote source JSON array to a JavaScript object array
-            return $.map(movies.results, function (movie) {
+            return $.map(phonemodels.results, function (phonemodel) {
                 return {
-                    value: movie.original_title,
-                    release_date: movie.release_date
+                    value: phonemodel.value,
+                    release_date: phonemodel.id
                 };
             });
         }
@@ -27,25 +21,33 @@ var movies = new Bloodhound({
 });
 
 // Initialize the Bloodhound suggestion engine
-movies.initialize();
+phonemodels.initialize();
 
 // Instantiate the Typeahead UI
 $('#scrollable-dropdown-menu .typeahead').typeahead(null, {
     displayKey: 'value',
-    source: movies.ttAdapter(),
+    source: phonemodels.ttAdapter(),
     templates: {
         empty: [
-            "<div class='empty-message'>",
-            "<a id='myLink' title='Click to do something' href='#' onclick='addNewWindow()'>Add New</a>",
-            "</div>"
+            "<p align='center'><b>",
+            "<a id='myLink' title='Click to do something' href='#' onclick='addPhoneModelWindow()' align='center'>Add New</a>",
+            "</b></p>"
         ].join("\n"),
         suggestion: Handlebars.compile("<p style='padding:6px'><b>{{value}}</b></p>"),
-        footer: Handlebars.compile("<a id='myLink' title='Click to do something' href='#' onclick='addNewWindow()'>Add New</a>")
+        footer: Handlebars.compile("<p align='center'><b><a id='myLink' title='Click to do something' href='#' onclick='addPhoneModelWindow()'>Add New</a></b></p>")
     }
 
 });
 
-function addNewWindow() {
-    alert("Hello !!!!!");
-    //	window.showModalDialog("example.hrml");
+
+
+function addPhoneModelWindow() {
+    var modal = document.getElementById('phoneModelModal');
+    modal.style.display = "block";
 }
+;
+function closePhoneModelWindow(){
+    var modal = document.getElementById('phoneModelModal');
+    modal.style.display = "none";
+}
+; 

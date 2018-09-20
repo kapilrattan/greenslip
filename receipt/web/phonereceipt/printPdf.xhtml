@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:body>
         <div id="header">
             <ui:insert name="commonHeader">
@@ -13,16 +14,16 @@
         </div>
         <h:form>
             <p:panel header="Print Receipt">
-                    <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+                <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
                     <p:printer target="printArea" />
                 </p:commandButton>
                 <p:panel id="printArea" style="border: 0">
                     <table border="0" align="center" cellpadding="2" cellspacing="2">
                         <tr>
-                            <td colspan="4"><img src="../images/logo.png" alt=""/></td>
+                            <td colspan="4" align="center"><img width="400px" src="../images/logo.png" alt=""/></td>
                         </tr>
                         <tr>
-                            <td>Store</td><td><b>#{receiptManagerBean.selectedReceiptDTO.storeName}</b></td>
+                            <td>Receipt Id</td><td><b>#{receiptManagerBean.selectedReceiptDTO.receiptId}</b></td>
                             <td>Date</td><td><b>#{receiptManagerBean.selectedReceiptDTO.tradeDate}</b></td>
                         </tr>
                         <tr>
@@ -31,11 +32,15 @@
                         </tr>   
                         <tr>
                             <td>Phone Condition</td><td><b>#{receiptManagerBean.selectedReceiptDTO.phoneCondition}</b></td>
-                            <td>IMEI Number</td><td><b>#{receiptManagerBean.selectedReceiptDTO.phoneModel}</b></td>
+                            <td>IMEI Number</td><td><b>#{receiptManagerBean.selectedReceiptDTO.imeiNumber}</b></td>
                         </tr>   
                         <tr>
                             <td>Seller Name</td><td><b>#{receiptManagerBean.selectedReceiptDTO.sellerName}</b></td>
                             <td>Contact Number</td><td><b>#{receiptManagerBean.selectedReceiptDTO.sellerContactNumber}</b></td>
+                        </tr>   
+                        <tr>
+                            <td>Store</td><td><b>#{receiptManagerBean.selectedReceiptDTO.storeName}</b></td>
+                            <td>Store Manager</td><td><b>#{receiptManagerBean.selectedReceiptDTO.storeManager}</b></td>
                         </tr>   
                         <tr>
                             <td>Email Id</td><td><b>#{receiptManagerBean.selectedReceiptDTO.sellerEmailId}</b></td>
@@ -44,6 +49,9 @@
                         <tr>
                             <td colspan="2">
                                 <img src="#{receiptManagerBean.selectedReceiptDTO.imageExternalPath}" alt="Photo Id"/>
+                                <c:if test='#{receiptManagerBean.selectedReceiptDTO.photoIdBackLocation != null}'>
+                                    <img src="#{receiptManagerBean.selectedReceiptDTO.photoIdBackLocation}" alt="Photo Id"/>
+                                </c:if>
                             </td>
                             <td colspan="2">
                                 <img src="#{receiptManagerBean.selectedReceiptDTO.signatureExternalPath}" alt="Signature"/>

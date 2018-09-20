@@ -21,11 +21,52 @@
                 background-color: #dce6f7;
                 border: 2px solid #CCCCCC;
                 border-radius: 8px 8px 8px 8px;
-                font-size: 16px;
                 line-height: 15px;
                 outline: medium none;
                 padding: 5px 5px;
+                width: 100%;
+                font-family: Arial,sans-serif;
+                font-size: 1.1em;
 
+            }
+            /* The Modal (background) */
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                padding-top: 100px; /* Location of the box */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+
+            /* Modal Content */
+            .modal-content {
+                background-color: #fefefe;
+                margin: auto;
+                padding: 20px;
+                width: 25%;
+                font-family: Arial,sans-serif;
+                font-size: 1.1em;
+            }
+
+            /* The Close Button */
+            .close {
+                color: red;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
             }
 
         </style>
@@ -57,7 +98,7 @@
                                 </td><td>                                
                                     <p:outputLabel for="tradeDate" value="Date :" />
                                 </td><td>
-                                    <p:calendar id="tradeDate" pattern="dd-MMM-yyyy" showOn="button"  value="#{receiptManagerBean.receiptDTO.tradeDate}" />
+                                    <p:calendar id="tradeDate" pattern="dd-MMM-yyyy" showOn="button"  value="#{receiptManagerBean.receiptDTO.tradeDate}" validatorMessage="Trade date should be in past" />
                                 </td>
                             </tr>
                             <tr>
@@ -65,17 +106,22 @@
                                     <h:outputLabel for="phoneMake" value="Make :" />
                                 </td><td>
                                     <div id="scrollable-dropdown-menu">
-                                    <p:inputText id="phoneMake" value="#{receiptManagerBean.receiptDTO.phoneMake}" class="typeahead" required="true">
-                                        <p:watermark for="phoneMake" value="Phone Make" />
-                                    </p:inputText>                                        
+                                        <p:inputText id="phoneMake" value="#{receiptManagerBean.receiptDTO.phoneMake}" class="typeahead" required="true" validatorMessage="Phone Make is required.">
+                                            <p:watermark for="phoneMake" value="Phone Make" />
+                                        </p:inputText>                                        
                                     </div>
                                 </td><td>
 
                                     <h:outputLabel for="phoneModel" value="Model :" />
                                 </td><td>
-                                    <p:inputText id="phoneModel" value="#{receiptManagerBean.receiptDTO.phoneModel}" required="true" label="Phone Model">
+                                    <p:autoComplete id="phoneModel" value="#{receiptManagerBean.receiptDTO.phoneModel}" required="true"  validatorMessage="Phone Model is required." 
+                                                    var="model" itemLabel="#{model.value}" itemValue="#{model}" completeMethod="#{receiptManagerBean.completePhoneModel}" forceSelection="true">
                                         <p:watermark for="phoneModel" value="Phone Model" />
-                                    </p:inputText>
+                                        <p:column>
+                                            <h:outputText value="#{model.value}" />
+                                        </p:column>                                        
+
+                                    </p:autoComplete>
                                 </td>
                             </tr>
                             <tr>
@@ -151,8 +197,21 @@
             </div>
 
         </h:form>
+        <div id="phoneModelModal" class="modal">
+            <div class="modal-content">
+                <h:form id="frmPhoneModel" >
+                    <p:panel header="Add Phone Model">
+                        <p:panelGrid id="addDropdownRresource" columns="2">
+                        <p:outputLabel for="resourceValue" value="Phone Model"/>
+                        <p:inputText id="resourceValue" value="#{receiptManagerBean.dropdownResourceDTO.value}" placeholder="Phone Model"/>
+                        <p:commandButton value="Submit" action="#{receiptManagerBean.addPhoneModel}" onclick="closePhoneModelWindow()" />
+                        <p:commandButton value="Close" onclick="closePhoneModelWindow()" />
+                    </p:panelGrid>
+                    </p:panel>
+                </h:form>
+            </div>
+        </div>
         <script src="../js/handlebars.js"></script>
-        <script src="../js/jquery-1.10.2.min.js"></script>
         <script src="../js/typeahead.bundle.js"></script>
         <script src="../js/bloodhound.js"></script>
         <script src="../js/phonereceipt.js" />

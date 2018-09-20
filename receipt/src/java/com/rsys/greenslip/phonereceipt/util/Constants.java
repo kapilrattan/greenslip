@@ -19,4 +19,12 @@ public class Constants {
     public static String PROPERTY_HEADER_TEXT_LINE3 = "header.content.line3";
     public static String PROPERTY_HEADER_TEXT_LINE4 = "header.content.line4";
     public static final String URL_DATA_PNG_BASE64_PREFIX = "data:image/png;base64,";
+    public static String PARAMETER_ACTION = "action"; 
+    public static String PARAMETER_RESOURCE = "resource";
+    public static String RESOURCE_ACTION_ADD = "add";
+    public static String RESOURCE_ACTION_GET = "get";
+    public static String PARAMETER_RESOURCE_VALUE = "resourceValue";
+    public static String JSON_KEY_ID = "id";
+    public static String JSON_KEY_VALUE = "value";
+    public static String RESOURCE_PHONE_MODEL = "phonemodel";
 }
