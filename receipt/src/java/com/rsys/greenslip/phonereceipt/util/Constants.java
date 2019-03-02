@@ -27,4 +27,6 @@ public class Constants {
     public static String JSON_KEY_ID = "id";
     public static String JSON_KEY_VALUE = "value";
     public static String RESOURCE_PHONE_MODEL = "phonemodel";
+    public static String RESOURCE_PHONE_MAKE = "phonemake";
+    public static String RESOURCE_PHOTO_ID_TYPE = "photoidtype";
 }

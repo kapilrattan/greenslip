@@ -108,7 +108,7 @@ public class PhoneReceiptDAOImpl implements PhoneReceiptDAO {
                 receiptDTO.setStoreName(resultSet.getString("storeName"));
                 receiptDTO.setTradeDate(resultSet.getDate("tradeDate"));
                 receiptDTO.setImageExternalPath(resultSet.getString("photoIdExternalPath"));
-                receiptDTO.setPhotoIdBackLocation(resultSet.getString("photoIdBackExternalLocation"));
+                receiptDTO.setBackImageExternalPath(resultSet.getString("photoIdBackExternalLocation"));
                 receiptDTO.setSignatureExternalPath(resultSet.getString("signatureExternalPath"));
                 resultList.add(receiptDTO);
             }

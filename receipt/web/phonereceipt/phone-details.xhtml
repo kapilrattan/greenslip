@@ -72,7 +72,7 @@
         </style>
     </h:head>
     <h:body>
-        <h:form>
+        <h:form id="frm_phonedetails">
             <div id="header">
                 <ui:insert name="phonereceiptHeader">
                     <ui:include src="phonereceipt-header.xhtml" />
@@ -91,49 +91,46 @@
                                     <p:outputLabel for="storeName" value="Store :" />
                                 </td>
                                 <td>
-                                    <p:selectOneButton id="storeName" value="#{receiptManagerBean.receiptDTO.storeName}">
+                                    <p:selectOneButton id="storeName" value="#{receiptManagerBean.receiptDTO.storeName}" required="true" label="Store Name">
                                         <f:selectItem itemLabel="Central" itemValue="Central" />
                                         <f:selectItem itemLabel="Newtown" itemValue="Newtown" />
                                     </p:selectOneButton>
                                 </td><td>                                
                                     <p:outputLabel for="tradeDate" value="Date :" />
                                 </td><td>
-                                    <p:calendar id="tradeDate" pattern="dd-MMM-yyyy" showOn="button"  value="#{receiptManagerBean.receiptDTO.tradeDate}" validatorMessage="Trade date should be in past" />
+                                    <p:calendar id="tradeDate" pattern="dd-MMM-yyyy" showOn="button"  value="#{receiptManagerBean.receiptDTO.tradeDate}" validatorMessage="Trade Date should be in past." />
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <h:outputLabel for="phoneMake" value="Make :" />
                                 </td><td>
-                                    <div id="scrollable-dropdown-menu">
-                                        <p:inputText id="phoneMake" value="#{receiptManagerBean.receiptDTO.phoneMake}" class="typeahead" required="true" validatorMessage="Phone Make is required.">
+                                    <div id="scrollable-dropdown-menu-phonemake">
+                                        <p:inputText id="phoneMake" value="#{receiptManagerBean.receiptDTO.phoneMake}" class="typeahead" required="true" label="Phone Make" >
                                             <p:watermark for="phoneMake" value="Phone Make" />
-                                        </p:inputText>                                        
+                                        </p:inputText> 
                                     </div>
                                 </td><td>
 
                                     <h:outputLabel for="phoneModel" value="Model :" />
                                 </td><td>
-                                    <p:autoComplete id="phoneModel" value="#{receiptManagerBean.receiptDTO.phoneModel}" required="true"  validatorMessage="Phone Model is required." 
-                                                    var="model" itemLabel="#{model.value}" itemValue="#{model}" completeMethod="#{receiptManagerBean.completePhoneModel}" forceSelection="true">
-                                        <p:watermark for="phoneModel" value="Phone Model" />
-                                        <p:column>
-                                            <h:outputText value="#{model.value}" />
-                                        </p:column>                                        
-
-                                    </p:autoComplete>
+                                    <div id="scrollable-dropdown-menu-phonemodel">
+                                        <p:inputText id="phoneModel" value="#{receiptManagerBean.receiptDTO.phoneModel}" required="true" label="Phone Model" class="typeahead">
+                                            <p:watermark for="phoneModel" value="Phone Model" />
+                                        </p:inputText>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <h:outputText value="Phone Condition :" />
+                                    <h:outputLabel for="phoneCondition" value="Phone Condition :" />
                                 </td><td>
-                                    <p:selectOneButton value="#{receiptManagerBean.receiptDTO.phoneCondition}">
+                                    <p:selectOneButton id="phoneCondition" value="#{receiptManagerBean.receiptDTO.phoneCondition}" required="true" label="Phone Condition">
                                         <f:selectItem itemLabel="Used" itemValue="Used" />
                                         <f:selectItem itemLabel="New" itemValue="New" />
                                     </p:selectOneButton>
                                 </td><td>
-                                    <h:outputText value="IMEI Number :" />
+                                    <h:outputLabel for="imeiNumber" value="IMEI Number :" />
                                 </td><td>
                                     <p:inputText id="imeiNumber" value="#{receiptManagerBean.receiptDTO.imeiNumber}" required="false" label="IMEI Number">
                                         <p:watermark for="imeiNumber" value="IMEI Number" />
@@ -165,9 +162,11 @@
                                 </td><td>
                                     <h:outputLabel for="sellerPhotoIdType" value="Photo Id Type :" />
                                 </td><td>
-                                    <p:inputText id="sellerPhotoIdType" value="#{receiptManagerBean.receiptDTO.sellerPhotoIdType}" required="true" label="Photo Id Type">
-                                        <p:watermark for="sellerPhotoIdType" value="Photo Id Type" />
-                                    </p:inputText>
+                                    <div id="scrollable-dropdown-menu-photoidtype">
+                                        <p:inputText id="sellerPhotoIdType" value="#{receiptManagerBean.receiptDTO.sellerPhotoIdType}" class="typeahead" required="true" label="Photo Id Type">
+                                            <p:watermark for="sellerPhotoIdType" value="Photo Id Type" />
+                                        </p:inputText>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -201,12 +200,40 @@
             <div class="modal-content">
                 <h:form id="frmPhoneModel" >
                     <p:panel header="Add Phone Model">
-                        <p:panelGrid id="addDropdownRresource" columns="2">
-                        <p:outputLabel for="resourceValue" value="Phone Model"/>
-                        <p:inputText id="resourceValue" value="#{receiptManagerBean.dropdownResourceDTO.value}" placeholder="Phone Model"/>
-                        <p:commandButton value="Submit" action="#{receiptManagerBean.addPhoneModel}" onclick="closePhoneModelWindow()" />
-                        <p:commandButton value="Close" onclick="closePhoneModelWindow()" />
-                    </p:panelGrid>
+                        <p:panelGrid id="addPhoneModelDropdownRresource" columns="2">
+                            <p:outputLabel for="phoneModelValue" value="Phone Model"/>
+                            <p:inputText id="phoneModelValue" value="#{receiptManagerBean.dropdownResourceDTO.value}" placeholder="Phone Model"/>
+                            <p:commandButton value="Submit" action="#{receiptManagerBean.addPhoneModel}" onclick="submitPhoneModelWindow()" />
+                            <p:commandButton value="Close" onclick="closePhoneModelWindow()" />
+                        </p:panelGrid>
+                    </p:panel>
+                </h:form>
+            </div>
+        </div>
+        <div id="phoneMakeModal" class="modal">
+            <div class="modal-content">
+                <h:form id="frmPhoneMake" >
+                    <p:panel header="Add Phone Make">
+                        <p:panelGrid id="addPhoneMakeDropdownRresource" columns="2">
+                            <p:outputLabel for="phoneMakeValue" value="Phone Make"/>
+                            <p:inputText id="phoneMakeValue" value="#{receiptManagerBean.dropdownResourceDTO.value}" placeholder="Phone Make"/>
+                            <p:commandButton value="Submit" action="#{receiptManagerBean.addPhoneMake}" onclick="submitPhoneMakeWindow()" />
+                            <p:commandButton value="Close" onclick="closePhoneMakeWindow()" />
+                        </p:panelGrid>
+                    </p:panel>
+                </h:form>
+            </div>
+        </div>
+        <div id="photoIdTypeModal" class="modal">
+            <div class="modal-content">
+                <h:form id="frmPhotoIdType" >
+                    <p:panel header="Add Photo Id TYpe">
+                        <p:panelGrid id="addPhotoIdTypeDropdownRresource" columns="2">
+                            <p:outputLabel for="photoIdTypeValue" value="Photo Id Type"/>
+                            <p:inputText id="photoIdTypeValue" value="#{receiptManagerBean.dropdownResourceDTO.value}" placeholder="Photo Id Type"/>
+                            <p:commandButton value="Submit" action="#{receiptManagerBean.addPhotoIdType}" onclick="submitPhotoIdTypeWindow()" />
+                            <p:commandButton value="Close" onclick="closePhotoIdTypeWindow()" />
+                        </p:panelGrid>
                     </p:panel>
                 </h:form>
             </div>
