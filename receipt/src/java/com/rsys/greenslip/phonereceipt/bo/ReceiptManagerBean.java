@@ -13,6 +13,7 @@ import com.rsys.greenslip.phonereceipt.dto.ReceiptSearchDTO;
 import com.rsys.greenslip.phonereceipt.service.DropDownResource;
 import com.rsys.greenslip.phonereceipt.util.Constants;
 import com.rsys.greenslip.phonereceipt.util.PDFGenerator;
+import com.rsys.greenslip.phonereceipt.util.PropertiesManager;
 import com.rsys.greenslip.phonereceipt.util.SimplePDFGenerator;
 import java.util.Date;
 import java.io.File;
@@ -212,5 +213,32 @@ private DropdownResourceDTO dropdownResourceDTO = new DropdownResourceDTO();
         System.out.println("Add Phone Model ["+resourceValue+"]") ; 
         String result = phoneReceiptDAO.addDropdownResource(Constants.RESOURCE_PHONE_MODEL,resourceValue);
         System.out.println("Phone Model Added at Index ["+result+"]"); 
+    }
+    public void addPhoneMake(){
+        PhoneReceiptDAO phoneReceiptDAO = new PhoneReceiptDAOImpl();
+        String resourceValue = dropdownResourceDTO.getValue(); 
+        System.out.println("Add Phone Make ["+resourceValue+"]") ; 
+        String result = phoneReceiptDAO.addDropdownResource(Constants.RESOURCE_PHONE_MAKE,resourceValue);
+        System.out.println("Phone Make Added at Index ["+result+"]"); 
+    }
+    public void addPhotoIdType(){
+        PhoneReceiptDAO phoneReceiptDAO = new PhoneReceiptDAOImpl();
+        String resourceValue = dropdownResourceDTO.getValue(); 
+        System.out.println("Add Phone Make ["+resourceValue+"]") ; 
+        String result = phoneReceiptDAO.addDropdownResource(Constants.RESOURCE_PHOTO_ID_TYPE,resourceValue);
+        System.out.println("Phone Make Added at Index ["+result+"]"); 
+    }
+    
+    public String getAddressLine1(){
+        return PropertiesManager.getInstance().getPropertyValue(Constants.PROPERTY_HEADER_TEXT_LINE1); 
+    }
+    public String getAddressLine2(){
+        return PropertiesManager.getInstance().getPropertyValue(Constants.PROPERTY_HEADER_TEXT_LINE2); 
+    }
+    public String getAddressLine3(){
+        return PropertiesManager.getInstance().getPropertyValue(Constants.PROPERTY_HEADER_TEXT_LINE3); 
+    }
+    public String getAddressLine4(){
+        return PropertiesManager.getInstance().getPropertyValue(Constants.PROPERTY_HEADER_TEXT_LINE4); 
     }
 }
